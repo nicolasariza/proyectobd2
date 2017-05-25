@@ -100,6 +100,7 @@ $result_libro = mysqli_query($link, $query_libro) or die('Error de Conexión (' 
           <form method="POST">
           <div class="resultado"></div>
     <input hidden="false" type="text" class="form-control" id="inputPer" name="inputPer" aria-describedby="documentoPersona" value="<?php echo "$id_persona"; ?>">
+    <input hidden="false" type="text" class="form-control" id="inputIdDev" name="inputIdDev" aria-describedby="documentoPersona" value="<?php echo "$id_libro_persona"; ?>">
     
    <label for="inputBuscar">Buscar persona</label>
    <div class="input-group">
