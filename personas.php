@@ -50,12 +50,14 @@ $result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión
       <li class="nav-item">
         <a class="nav-link" href="devoluciones.php"><i class="fa fa-bookmark-o" aria-hidden="true"></i>      Devoluciones</a>
       </li>
+      <!--
       <li class="nav-item">
         <a class="nav-link" href="informes.html"><i class="fa fa-newspaper-o" aria-hidden="true"></i>      Informes</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="http://localhost/BibliotecaBD2/listado_libros.php"><i class="fa fa-file-text" aria-hidden="true"></i>     Listado de libros</a>
       </li>
+      -->
     </ul>
   </div>
   </div>

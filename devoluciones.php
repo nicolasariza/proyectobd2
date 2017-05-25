@@ -9,25 +9,21 @@ $result_buscarPersona = mysqli_query($link, $query_buscarPersona) or die('Error 
 
 $personaQuery = mysqli_fetch_array($result_buscarPersona);
 extract($personaQuery);
-$ins = $link -> query("INSERT INTO libro_persona VALUES ('', '$inputPer', '$inputLibro', '$inputEstadoLibro','1', '$inputFecha', '', '$inputTiempoLimit', '$inputDescripcion', '$inputBibliotecarioPrestamo', '$inputBibliotecarioPrestamo')");
-$query_libro = "SELECT id_libro, titulo FROM libro";
-$result_libro = mysqli_query($link, $query_libro) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$ins = $link -> query("UPDATE `libro_persona` SET `id_estado_libro_fk`='$inputEstadoLibro',`id_accion_fk`=2,`fecha_devolucion`='$inputFecha',`observaciones`='$inputDescripcion',`bibliotecario_devolucion`='$inputBibliotecarioPrestamo' WHERE id_libro_persona = '$inputIdDev'");
 $query_EstLibro = "SELECT id_estado_libro, nom_estado_libro FROM estado_libro";
 $result_EstLibro = mysqli_query($link, $query_EstLibro) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 $query_accion = "SELECT id_accion, nom_accion FROM accion WHERE nom_accion = 'Prestamo'";
 $result_accion = mysqli_query($link, $query_accion) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 $query_bibliotecario = "SELECT id_persona, nombre, apellido FROM persona WHERE id_tipo_usuario_fk = 2";
 $result_bibliotecario = mysqli_query($link, $query_bibliotecario) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
-echo "$inputPer";
- //Query editorial
-/*
-while($fila_editorial = )
-            {
-              extract($fila_editorial);
-              echo "<option value='$id_editorial'>$nombre_editorial</option>";
-            }*/
-//echo '<br>'.$inputTipoDoc. $inputNumeroDoc.$inputNombre.$inputApellido.$inputTelefono.$inputDireccion.$inputTipoUsu;
-//echo $enviarForm;
+$query_Libro_Persona = "SELECT * FROM libro_persona WHERE id_persona_fk = '$id_persona' AND id_accion_fk = 1";
+$result_libro_persona = mysqli_query($link, $query_Libro_Persona) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$libroPersonaQuery = mysqli_fetch_array($result_libro_persona);
+extract($libroPersonaQuery);
+echo "$inputIdDev". " - " . "$inputEstadoLibro". " - " . "$inputFecha"." - ". "$inputDescripcion" ." - " . "$inputBibliotecarioPrestamo";
+$query_libro = "SELECT id_libro, titulo FROM libro WHERE id_libro = '$id_libro_fk'";
+$result_libro = mysqli_query($link, $query_libro) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,10 +59,10 @@ while($fila_editorial = )
       <li class="nav-item">
         <a class="nav-link" href="libros.php"><i class="fa fa-book" aria-hidden="true"></i>      Libros</a>
       </li>
-      <li class="nav-item active badge-default">
+      <li class="nav-item ">
         <a class="nav-link" href="prestamos.php"><i class="fa fa-bookmark" aria-hidden="true"></i>      Prestamos</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active badge-default">
         <a class="nav-link" href="devoluciones.php"><i class="fa fa-bookmark-o" aria-hidden="true"></i>      Devoluciones</a>
       </li>
       <!--
@@ -104,10 +100,11 @@ while($fila_editorial = )
           <form method="POST">
           <div class="resultado"></div>
     <input hidden="false" type="text" class="form-control" id="inputPer" name="inputPer" aria-describedby="documentoPersona" value="<?php echo "$id_persona"; ?>">
+    
    <label for="inputBuscar">Buscar persona</label>
    <div class="input-group">
      <input type="text" class="form-control" id="inputBuscar" name="inputBuscarPer" aria-describedby="documentoPersona" placeholder="Ingrese el número de documento de la persona">
-    <button class="btn btn-primary" onclick="Validar(document.getElementById('inputBuscar').value;">Buscar</button>
+    <button type="submit" class="btn btn-primary" onclick="Validar(document.getElementById('inputBuscar').value;">Buscar</button>
    </div>
    <?php
    //$resultadosSelect = mysqli_affected_rows($link);
@@ -122,7 +119,7 @@ while($fila_editorial = )
   <br><label for="sl_libro">Libro</label>
   <div class="input-group">
     <select class="form-control" id="sl_libr" name="inputLibro">
-      <option value='0'></option>;
+      <option
             <?php
             while($fila_libro = mysqli_fetch_array($result_libro))
             {
@@ -130,6 +127,7 @@ while($fila_editorial = )
               echo "<option value='$id_libro'>$titulo</option>";
             }
             ?>
+      ></option>;
     </select>
   </div>
 <!--
@@ -158,14 +156,14 @@ while($fila_editorial = )
   </div>
   <div class="form-group">
     <br><label for="inputTiempoLimit">Tiempo de prestamo</label>
-    <input type="number" class="form-control" id="inputTiempoLimit" name="inputTiempoLimit" placeholder="Ingrese el tiempo límite de prestamo">
+    <input value="<?php echo "$tiempo_limite"; ?>" type="number" class="form-control" id="inputTiempoLimit" name="inputTiempoLimit" placeholder="Ingrese el tiempo límite de prestamo" readonly="">
   </div>
    <div class="form-group">
     <label for="exampleTextarea">Descripcion</label>
     <textarea class="form-control" id="exampleTextarea" rows="3" name="inputDescripcion" placeholder="Ingrese una descripcion"></textarea>
   </div>
     <label for="sl_bibliotecarioPres">Bibliotecario</label>
-  <div class="input-group">
+  <div class="input-group"> 
     <select class="form-control" id="sl_bibliotecarioPres" name="inputBibliotecarioPrestamo">
       <option value='0'></option>;
             <?php

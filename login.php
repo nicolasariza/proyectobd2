@@ -43,11 +43,14 @@ $documentoUsuario = mysqli_query($link, "SELECT * FROM usuarios WHERE documento 
 <div class="container">
 <?php 
 $usuarioExiste = mysqli_query($link, "SELECT * FROM persona WHERE num_documento = '$inputNumeroDoc'");//Hace la consulta para saber si hay un documento con el mismo numero de documento
+$query_buscarPersona = "SELECT id_persona FROM persona ORDER BY id_persona DESC LIMIT 1";
+$result_buscarPersona = mysqli_query($link, $query_buscarPersona) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$personaQuery = mysqli_fetch_array($result_buscarPersona);
+extract($personaQuery);
 if (mysqli_num_rows($usuarioExiste) == 0){ //devuele el numero de documentos encontrados con ese numero y si es 0 significa que no hay ninguno y se realizan los insert
-    $ins = $link -> query("CALL registro_personas('$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')");
+    $ins = $link -> query("CALL registroUsuarios('$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu', '$inputPass')");
     //$ins = $link -> query("INSERT INTO persona VALUES ('', '$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')");//Estructura para un insert
-    $tablaUsuarios = $link -> query("INSERT INTO usuarios VALUES('','$inputNumeroDoc', '$inputPass')");
-    if ($ins) {
+   if ($ins) {
     echo '<div class="container" style="margin-top: 100px">
     <div class="row">
     <div class="col"></div>
