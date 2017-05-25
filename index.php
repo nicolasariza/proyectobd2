@@ -1,3 +1,14 @@
+<?php 
+session_start();
+if (!empty($_POST['salir'])) {
+  $_SESSION['id_persona'] = '';
+  session_destroy();
+}
+if (empty($_SESSION['id_per'])) {
+  header("location:login.php");
+}
+echo $_SESSION['id_per'];
+ ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

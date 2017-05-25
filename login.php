@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include("php/conectar.php");//incluye la función conectar ubicada en el archivo conectar.php
 $link = conectar();//asigno la función a la variable link
 extract($_POST);//obtener las variables post
@@ -8,8 +9,14 @@ $query_tipoDoc = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
 $result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());//Query para llamar los tipos de documento
 $query_tipoUsu = "SELECT id_tipo_usuario, nombre_tipo_usuario FROM tipo_usuario WHERE nombre_tipo_usuario NOT LIKE  '%Visitante%'";//Sentencia select con el not like que no muestre el resultado visitante
 $result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
-$documentoUsuario = mysqli_query($link, "SELECT * FROM usuarios WHERE documento = '$inputDocumento'");
-
+$query_usu = "SELECT * FROM usuarios WHERE numero_documento = '$inputDocumento' AND pass = '$inputPass';";
+$documentoUsua = mysqli_query($link, $query_usu)  or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$resultado = mysqli_num_rows($documentoUsua);
+if ($resultado>0) {
+    $row = mysqli_fetch_array($documentoUsua);
+    $_SESSION['id_per'] =  $row['id_persona_fk'];
+    echo "<script>top.location.href='../proyectobd2/index.php'</script>";
+}
 
 ?>
 <!DOCTYPE html>
@@ -50,7 +57,7 @@ extract($personaQuery);
 if (mysqli_num_rows($usuarioExiste) == 0){ //devuele el numero de documentos encontrados con ese numero y si es 0 significa que no hay ninguno y se realizan los insert
     $ins = $link -> query("CALL registroUsuarios('$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu', '$inputPass')");
     //$ins = $link -> query("INSERT INTO persona VALUES ('', '$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')");//Estructura para un insert
-   if ($ins) {
+ if ($ins) {
     echo '<div class="container" style="margin-top: 100px">
     <div class="row">
     <div class="col"></div>
@@ -199,11 +206,18 @@ else{//si el sqli_num_rows devuelve mas de 0 entonces muestra este mensaje de er
   </div>
   <div class="form-group">
     <label for="password">Contraseña</label>
-    <input type="password" class="form-control" id="password" name="inputPass" aria-describedby="nombre" placeholder="Ingrese su constraseña">
+    <input type="password" class="form-control" id="password2" name="inputPass" aria-describedby="nombre" placeholder="Ingrese su constraseña">
   </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Ingresar</button>
+        <button type="submit" class="btn btn-primary" onclick="cifrar2()">Ingresar</button>
+        <script>
+    function cifrar2(){
+      var input_pass = document.getElementById("password2");
+      input_pass.value = calcSHA1(input_pass.value);
+
+    }
+  </script>
       </div>
     </div>
   </div>
