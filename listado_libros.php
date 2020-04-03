@@ -13,7 +13,7 @@ if (empty($_SESSION['id_per'])) {
 }
 $id_per = $_SESSION['id_per'];
 $query_per = "SELECT * FROM persona WHERE id_persona = '$id_per'";
-$result_per = mysqli_query($link, $query_per) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_per = mysqli_query($link, $query_per) ;
 $datosPersona = mysqli_fetch_array($result_per);
 extract($datosPersona);
 $condicion_autor ="";
@@ -55,7 +55,7 @@ if(isset($sl_titulo))
 
 }
 
-$query_filtro = "select l.titulo as Titulo, a.nombre_autor as Autor, e.nombre_editorial as Editorial, g.nombre_genero_lit as Genero_Literario, l.anio, l.edicion, i.nombre_idioma as Idioma
+$query_filtro = "select l.titulo as Titulo, a.nombre_autor as Autor, e.nombre_editorial as Editorial, g.nombre_genero_lit as Genero_Literario, l.edicion, i.nombre_idioma as Idioma
 from libro l, autor a, editorial e, genero_lit g, idioma i 
 where 
 			l.id_autor_fk = a.id_autor and 
@@ -63,31 +63,25 @@ where
 			l.id_genero_lit_fk = g.id_genero_lit and
 			l.id_idioma_fk =  i.id_idioma";
  $query_completa = $query_filtro.$condicion_autor.$condicion_editorial.$condicion_genero_literario.$condicion_idioma.$condicion_titulo;			
-$result_lista = mysqli_query($link, $query_completa) or die('Error de Conexión, el error está acá (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error());
+$result_lista = mysqli_query($link, $query_completa);
 
 
 $query_autor = "select id_autor, nombre_autor from autor";
-$result_autor = mysqli_query($link, $query_autor) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error());
+$result_autor = mysqli_query($link, $query_autor);
 
 $query_editorial = "select id_editorial, nombre_editorial from editorial";
-$result_editorial = mysqli_query($link, $query_editorial) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error());
+$result_editorial = mysqli_query($link, $query_editorial);
 
 $query_genero_lit = "select g.id_genero_lit, g.nombre_genero_lit from
 	genero_lit g";
-$result_genero_lit = mysqli_query($link, $query_genero_lit) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error());	
+$result_genero_lit = mysqli_query($link, $query_genero_lit);	
 
 $query_idioma = "select i.id_idioma, i.nombre_idioma from idioma i";	
-$result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error());
+$result_idioma = mysqli_query($link, $query_idioma);
 
 $query_titulo = "select id_libro, titulo from libro";
 
-$result_titulo = mysqli_query($link, $query_titulo) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
-            . mysqli_connect_error());
+$result_titulo = mysqli_query($link, $query_titulo);
 ?>
 <html>
 <head>

@@ -13,7 +13,7 @@ if (empty($_SESSION['id_per'])) {
 }
 $id_per = $_SESSION['id_per'];
 $query_per = "SELECT * FROM persona WHERE id_persona = '$id_per'";
-$result_per = mysqli_query($link, $query_per) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_per = mysqli_query($link, $query_per) ;
 $datosPersona = mysqli_fetch_array($result_per);
 extract($datosPersona);
  ?>

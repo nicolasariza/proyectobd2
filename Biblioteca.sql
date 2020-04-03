@@ -1,6 +1,6 @@
 ﻿drop database if exists biblioteca;
 create database biblioteca;
- biblioteca;	
+use biblioteca;	
 
 create table tipo_doc
 (

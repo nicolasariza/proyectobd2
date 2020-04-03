@@ -13,24 +13,24 @@ if (empty($_SESSION['id_per'])) {
 }
 $id_per = $_SESSION['id_per'];
 $query_per = "SELECT * FROM persona WHERE id_persona = '$id_per'";
-$result_per = mysqli_query($link, $query_per) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_per = mysqli_query($link, $query_per) ;
 $datosPersona = mysqli_fetch_array($result_per);
 extract($datosPersona);
 //echo "('', '$inputTitulo', '$inputAutor', '$inputEditorial','$inputGenLit', '$inputAnio', '$inputEdicion', '$inputIdioma')";
 $query_buscarPersona = "SELECT id_persona, nombre, apellido FROM persona WHERE num_documento = '$inputBuscarPer'";
-$result_buscarPersona = mysqli_query($link, $query_buscarPersona) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_buscarPersona = mysqli_query($link, $query_buscarPersona) ;
 
 $personaQuery = mysqli_fetch_array($result_buscarPersona);
 extract($personaQuery);
 $ins = $link -> query("INSERT INTO libro_persona VALUES ('', '$inputPer', '$inputLibro', '$inputEstadoLibro','1', '$inputFecha', '', '$inputTiempoLimit', '$inputDescripcion', '$inputBibliotecarioPrestamo', '$inputBibliotecarioPrestamo')");
 $query_libro = "SELECT id_libro, titulo FROM libro";
-$result_libro = mysqli_query($link, $query_libro) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_libro = mysqli_query($link, $query_libro) ;
 $query_EstLibro = "SELECT id_estado_libro, nom_estado_libro FROM estado_libro";
-$result_EstLibro = mysqli_query($link, $query_EstLibro) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_EstLibro = mysqli_query($link, $query_EstLibro) ;
 $query_accion = "SELECT id_accion, nom_accion FROM accion WHERE nom_accion = 'Prestamo'";
-$result_accion = mysqli_query($link, $query_accion) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_accion = mysqli_query($link, $query_accion) ;
 $query_bibliotecario = "SELECT id_persona, nombre, apellido FROM persona WHERE id_tipo_usuario_fk = 2";
-$result_bibliotecario = mysqli_query($link, $query_bibliotecario) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_bibliotecario = mysqli_query($link, $query_bibliotecario) ;
 echo "$inputPer";
  //Query editorial
 /*

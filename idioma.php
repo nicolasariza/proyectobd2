@@ -7,7 +7,7 @@ if ('$inputIdioma' != "") {
 $ins = $link -> query("INSERT INTO idioma (id_idioma, nombre_idioma) VALUES ('','$inputIdioma')");
 }
 $query_idioma = "SELECT id_idioma, nombre_idioma FROM idioma ORDER BY id_idioma DESC LIMIT 1";
-$result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query editorial
+$result_idioma = mysqli_query($link, $query_idioma) ; //Query editorial
 
 ?>
 <!DOCTYPE html>

@@ -5,7 +5,7 @@ extract($_POST);
 error_reporting(0);//para no mostrar el error por variables aun no definidas
 $ins = $link -> query("INSERT INTO editorial (nombre_editorial) VALUES ('$inputEditorial')");
 $query_editorial = "SELECT id_editorial, nombre_editorial FROM editorial ORDER BY id_editorial DESC LIMIT 1";
-$result_editorial = mysqli_query($link, $query_editorial) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query editorial
+$result_editorial = mysqli_query($link, $query_editorial) ; //Query editorial
 
 ?>
 <!DOCTYPE html>

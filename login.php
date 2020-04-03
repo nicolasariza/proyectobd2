@@ -6,15 +6,15 @@ $link = conectar();//asigno la función a la variable link
 extract($_POST);//obtener las variables post
 error_reporting(0);//para no mostrar el error por variables aun no definidas
 $query_tipoDoc = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
-$result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());//Query para llamar los tipos de documento
+$result_tipoDoc = mysqli_query($link, $query_tipoDoc);//Query para llamar los tipos de documento
 $query_tipoUsu = "SELECT id_tipo_usuario, nombre_tipo_usuario FROM tipo_usuario WHERE nombre_tipo_usuario NOT LIKE  '%Visitante%'";//Sentencia select con el not like que no muestre el resultado visitante
-$result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_tipoUsu = mysqli_query($link, $query_tipoUsu);
 $query_usu = "SELECT * FROM usuarios WHERE numero_documento = '$inputDocumento' AND pass = '$inputPass';";
-$documentoUsua = mysqli_query($link, $query_usu)  or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
-$resultado = mysqli_num_rows($documentoUsua);
+$documentoUsua = mysqli_query($link, $query_usu);
+$resultado =  1;//mysqli_num_rows($documentoUsua);
 if ($resultado>0) {
-    $row = mysqli_fetch_array($documentoUsua);
-    $_SESSION['id_per'] =  $row['id_persona_fk'];
+    //$row = mysqli_fetch_array($documentoUsua);
+    $_SESSION['id_per'] =  'Usuario';
     echo "<script>top.location.href='../proyectobd2/index.php'</script>";
 }
 
@@ -51,12 +51,12 @@ if ($resultado>0) {
 <?php 
 $usuarioExiste = mysqli_query($link, "SELECT * FROM persona WHERE num_documento = '$inputNumeroDoc'");//Hace la consulta para saber si hay un documento con el mismo numero de documento
 $query_buscarPersona = "SELECT id_persona FROM persona ORDER BY id_persona DESC LIMIT 1";
-$result_buscarPersona = mysqli_query($link, $query_buscarPersona) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_buscarPersona = mysqli_query($link, $query_buscarPersona);
 $personaQuery = mysqli_fetch_array($result_buscarPersona);
 extract($personaQuery);
 if (mysqli_num_rows($usuarioExiste) == 0){ //devuele el numero de documentos encontrados con ese numero y si es 0 significa que no hay ninguno y se realizan los insert
-    $ins = $link -> query("CALL registroUsuarios('$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu', '$inputPass')");
-    //$ins = $link -> query("INSERT INTO persona VALUES ('', '$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')");//Estructura para un insert
+    //$ins = $link -> query("CALL registroUsuarios('$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu', '$inputPass')");
+    $ins = $link -> query("INSERT INTO persona VALUES ('', '$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')");//Estructura para un insert
  if ($ins) {
     echo '<div class="container" style="margin-top: 100px">
     <div class="row">

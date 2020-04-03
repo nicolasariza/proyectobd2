@@ -13,29 +13,29 @@ if (empty($_SESSION['id_per'])) {
 }
 $id_per = $_SESSION['id_per'];
 $query_per = "SELECT * FROM persona WHERE id_persona = '$id_per'";
-$result_per = mysqli_query($link, $query_per) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_per = mysqli_query($link, $query_per) ;
 $datosPersona = mysqli_fetch_array($result_per);
 extract($datosPersona);
 //echo "('', '$inputTitulo', '$inputAutor', '$inputEditorial','$inputGenLit', '$inputAnio', '$inputEdicion', '$inputIdioma')";
 $query_buscarPersona = "SELECT id_persona, nombre, apellido FROM persona WHERE num_documento = '$inputBuscarPer'";
-$result_buscarPersona = mysqli_query($link, $query_buscarPersona) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_buscarPersona = mysqli_query($link, $query_buscarPersona) ;
 
 $personaQuery = mysqli_fetch_array($result_buscarPersona);
 extract($personaQuery);
 $ins = $link -> query("UPDATE `libro_persona` SET `id_estado_libro_fk`='$inputEstadoLibro',`id_accion_fk`=2,`fecha_devolucion`='$inputFecha',`observaciones`='$inputDescripcion',`bibliotecario_devolucion`='$inputBibliotecarioPrestamo' WHERE id_libro_persona = '$inputIdDev'");
 $query_EstLibro = "SELECT id_estado_libro, nom_estado_libro FROM estado_libro";
-$result_EstLibro = mysqli_query($link, $query_EstLibro) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_EstLibro = mysqli_query($link, $query_EstLibro) ;
 $query_accion = "SELECT id_accion, nom_accion FROM accion WHERE nom_accion = 'Prestamo'";
-$result_accion = mysqli_query($link, $query_accion) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_accion = mysqli_query($link, $query_accion) ;
 $query_bibliotecario = "SELECT id_persona, nombre, apellido FROM persona WHERE id_tipo_usuario_fk = 2";
-$result_bibliotecario = mysqli_query($link, $query_bibliotecario) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_bibliotecario = mysqli_query($link, $query_bibliotecario) ;
 $query_Libro_Persona = "SELECT * FROM libro_persona WHERE id_persona_fk = '$id_persona' AND id_accion_fk = 1";
-$result_libro_persona = mysqli_query($link, $query_Libro_Persona) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_libro_persona = mysqli_query($link, $query_Libro_Persona) ;
 $libroPersonaQuery = mysqli_fetch_array($result_libro_persona);
 extract($libroPersonaQuery);
 //echo "$inputIdDev". " - " . "$inputEstadoLibro". " - " . "$inputFecha"." - ". "$inputDescripcion" ." - " . "$inputBibliotecarioPrestamo";
 $query_libro = "SELECT id_libro, titulo FROM libro WHERE id_libro = '$id_libro_fk'";
-$result_libro = mysqli_query($link, $query_libro) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_libro = mysqli_query($link, $query_libro) ;
 
 ?>
 <!DOCTYPE html>

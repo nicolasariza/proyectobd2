@@ -13,20 +13,21 @@ if (empty($_SESSION['id_per'])) {
 }
 $id_per = $_SESSION['id_per'];
 $query_per = "SELECT * FROM persona WHERE id_persona = '$id_per'";
-$result_per = mysqli_query($link, $query_per) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_per = mysqli_query($link, $query_per);
 $datosPersona = mysqli_fetch_array($result_per);
 extract($datosPersona);
-$ins = $link -> query("INSERT INTO libro (titulo, id_autor_fk, id_editorial_fk, id_genero_lit_fk, anio, edicion, id_idioma_fk) VALUES ('$inputTitulo', '$inputAutor', '$inputEditorial','$inputGenLit', '$inputAnio', '$inputEdicion', '$inputIdioma')");
+$insertLibro = "INSERT INTO libro (titulo, id_autor_fk, id_editorial_fk, id_genero_lit_fk, edicion, id_idioma_fk) VALUES ('$inputTitulo', '$inputAutor', '$inputEditorial','$inputGenLit', '$inputEdicion', '$inputIdioma')";
+$ins = $link -> query($insertLibro);
 $query_autor = "select id_autor, nombre_autor from autor";
 //echo "('', '$inputTitulo', '$inputAutor', '$inputEditorial','$inputGenLit', '$inputAnio', '$inputEdicion', '$inputIdioma')";
 $result_autor = mysqli_query($link, $query_autor) or die('Error de Conexión (' . mysqli_connect_errno() . ') '
             . mysqli_connect_error()); //Query de autor
 $query_editorial = "SELECT id_editorial, nombre_editorial FROM editorial";
-$result_editorial = mysqli_query($link, $query_editorial) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query editorial
+$result_editorial = mysqli_query($link, $query_editorial) ; //Query editorial
 $query_genLit = "SELECT id_genero_lit, nombre_genero_lit FROM genero_lit";
-$result_genLit = mysqli_query($link, $query_genLit) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query genero literario
+$result_genLit = mysqli_query($link, $query_genLit) ; //Query genero literario
 $query_idioma = "SELECT id_idioma, nombre_idioma FROM idioma";//consulta a la base de datos
-$result_idioma = mysqli_query($link, $query_idioma) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query idioma - se llama a la conexión
+$result_idioma = mysqli_query($link, $query_idioma) ; //Query idioma - se llama a la conexión
 ?>
 <!DOCTYPE html>
 <html lang="en">

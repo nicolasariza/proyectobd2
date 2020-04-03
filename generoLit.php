@@ -5,9 +5,9 @@ extract($_POST);
 error_reporting(0);//para no mostrar el error por variables aun no definidas
 $ins = $link -> query("INSERT INTO genero_lit (nombre_genero_lit) VALUES ('$inputGenLit')");
 $query_editorial = "SELECT id_editorial, nombre_editorial FROM editorial ORDER BY id_editorial DESC LIMIT 1";
-$result_editorial = mysqli_query($link, $query_editorial) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query editorial
+$result_editorial = mysqli_query($link, $query_editorial) ; //Query editorial
 $query_genLit = "SELECT id_genero_lit, nombre_genero_lit FROM genero_lit ORDER BY id_genero_lit DESC LIMIT 1";
-$result_genLit = mysqli_query($link, $query_genLit) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error()); //Query genero literario
+$result_genLit = mysqli_query($link, $query_genLit) ; //Query genero literario
 
 ?>
 <!DOCTYPE html>

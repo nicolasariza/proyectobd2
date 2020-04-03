@@ -13,14 +13,14 @@ if (empty($_SESSION['id_per'])) {
 }
 $id_per = $_SESSION['id_per'];
 $query_per = "SELECT * FROM persona WHERE id_persona = '$id_per'";
-$result_per = mysqli_query($link, $query_per) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_per = mysqli_query($link, $query_per) ;
 $datosPersona = mysqli_fetch_array($result_per);
 extract($datosPersona);
 $ins = $link -> query("CALL registrarPersonas('$inputTipoDoc', '$inputNumeroDoc', '$inputNombre','$inputApellido', '$inputTelefono', '$inputDireccion', '$inputTipoUsu')");
 $query_tipoDoc = "select id_tipo_doc, nombre_tipo_doc from tipo_doc";
-$result_tipoDoc = mysqli_query($link, $query_tipoDoc) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_tipoDoc = mysqli_query($link, $query_tipoDoc) ;
 $query_tipoUsu = "SELECT id_tipo_usuario, nombre_tipo_usuario FROM tipo_usuario";
-$result_tipoUsu = mysqli_query($link, $query_tipoUsu) or die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+$result_tipoUsu = mysqli_query($link, $query_tipoUsu) ;
 //echo $enviarForm;
 ?>
 <!DOCTYPE html>
